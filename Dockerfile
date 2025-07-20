@@ -1,15 +1,22 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:12.2.7
 FROM ${BUILD_FROM}
 
-RUN apk add --no-cache curl bash
+ENV LANG C.UTF-8
+ENV MTX_VERSION=1.13.0
 
-ENV MTX_VERSION=0.19.4
-RUN curl -L -o /usr/bin/mediamtx \
-  https://github.com/bluenviron/mediamtx/releases/download/v${MTX_VERSION}/mediamtx_linux_amd64 && \
-  chmod +x /usr/bin/mediamtx
+WORKDIR /opt
 
-#COPY mediamtx.yml /etc/mediamtx/mediamtx.yml
+# 下载并解压 ARM64 静态编译版本
+RUN apk add --no-cache curl tar && \
+    curl -L -o mediamtx.tar.gz https://github.com/bluenviron/mediamtx/releases/download/v${MTX_VERSION}/mediamtx_v${MTX_VERSION}_linux_arm64.tar.gz && \
+    tar -xzf mediamtx.tar.gz && \
+    mv mediamtx /usr/bin/mediamtx && \
+    chmod +x /usr/bin/mediamtx && \
+    rm -rf mediamtx.tar.gz
 
-WORKDIR /etc/mediamtx
+COPY run.sh /run.sh
+COPY mediamtx.yml
 
-CMD ["/usr/bin/mediamtx", "/etc/mediamtx/mediamtx.yml"]
+RUN chmod +x /run.sh
+
+CMD [ "/run.sh" ]

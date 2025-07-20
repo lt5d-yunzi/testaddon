@@ -1,29 +1,21 @@
-name: MediaMTX
-version: "1.0.0"
+name: MediaMTX Proxy
+version: "1.13.0"
 slug: mediamtx
-description: "MediaMTX streaming server Add-on for Home Assistant OS"
-
-arch:
-  - amd64
-  - armv7
-  - aarch64
-  - armhf
-
+description: Lightweight RTSP/RTMP/WEBRTC stream relay for Home Assistant
 startup: services
 boot: auto
+hassio_api: false
+host_network: true
+hassio_role: default
 
-network_mode: host   # 关键，确保 RTSP UDP 正常工作
+options: {}
+
+schema: {}
 
 ports:
-  8554/tcp: 8554
-  1935/tcp: 1935
-  8888/tcp: 8888
+  8554/tcp: 8554  # RTSP
+  1935/tcp: 1935  # RTMP
+  8888/tcp: 8888  # Web UI
   8889/tcp: 8889
   8890/udp: 8890
   8189/udp: 8189
-
-map:
-  - config:rw
-
-options: {}
-schema: {}
