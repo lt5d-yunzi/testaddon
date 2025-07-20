@@ -1,6 +1,6 @@
 name: MediaMTX Proxy
 version: "1.13.0"
-slug: mediamtx
+slug: mediamtx-addno
 description: Lightweight RTSP/RTMP/WEBRTC stream relay for Home Assistant
 startup: services
 boot: auto
