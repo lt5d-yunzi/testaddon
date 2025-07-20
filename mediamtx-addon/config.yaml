@@ -1,0 +1,29 @@
+name: MediaMTX
+version: "1.0.0"
+slug: mediamtx
+description: "MediaMTX streaming server Add-on for Home Assistant OS"
+
+arch:
+  - amd64
+  - armv7
+  - aarch64
+  - armhf
+
+startup: services
+boot: auto
+
+network_mode: host   # 关键，确保 RTSP UDP 正常工作
+
+ports:
+  8554/tcp: 8554
+  1935/tcp: 1935
+  8888/tcp: 8888
+  8889/tcp: 8889
+  8890/udp: 8890
+  8189/udp: 8189
+
+map:
+  - config:rw
+
+options: {}
+schema: {}
